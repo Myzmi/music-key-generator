@@ -1,0 +1,82 @@
+{% extends "key/layout.html" %}
+
+{% block body %}
+    <h1>Key: {{ note }} {{ type }}</h1>
+    <div class="key-select">
+        <h2 class="fieldset-h2">Select Another Key</h2>
+        <form action="{% url 'selKey' %}" method="post">
+            {% csrf_token %}
+            <select name="note">
+                <option value="A">A</option>
+                <option value="As">A#</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="Cs">C#</option>
+                <option value="D">D</option>
+                <option value="Ds">D#</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="Fs">F#</option>
+                <option value="G">G</option>
+                <option value="Gs">G#</option>
+            </select>
+            <select name="type">
+                <option value="maj">Major</option>
+                <option value="min">Minor</option>
+            </select>
+            <input type="submit" value="Select">
+        </form>
+        <form action="{% url 'randomKey' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Random</button>
+        </form>
+    </div>
+
+    <div class="notes-box">
+        <h2>Notes</h2>
+    <p>{{ table.rootNote }}, {{ table.note2 }}, {{ table.note3 }}, {{ table.note4 }}, {{ table.note5 }}, {{ table.note6 }}, {{ table.note7 }}</p>
+    
+    <h2>Chords</h2>
+    {% if type == 'Major' %}
+        <p>{{ table.rootNote }}, {{ table.note2 }}m, {{ table.note3 }}m, {{ table.note4 }}, {{ table.note5 }}, {{ table.note6 }}m, {{ table.note7 }}dim</p>
+    {% elif type == 'Minor' %}
+        <p>{{ table.rootNote }}m, {{ table.note2 }}dim, {{ table.note3 }}, {{ table.note4 }}m, {{ table.note5 }}m, {{ table.note6 }}, {{ table.note7 }}</p>
+    {% endif %}
+    </div>
+
+    <div class="chord-prog-box">
+        <h2>Common Chord Progressions</h2>
+    {% if type == 'Major' %}
+        <div class="chord-prog-container">
+            <p>{{ table.rootNote }}, {{ table.note4 }}, {{table.note5}}, {{ table.note4 }}</p>
+            <p class="chord-prog">(1-4-5-4)</p>
+        </div>
+        
+        <div class="chord-prog-container">
+            <p>{{ table.rootNote }}, {{ table.note5 }}, {{table.note6}}m, {{ table.note4 }}</p>
+            <p class="chord-prog">(1-5-6-4)</p>
+        </div>
+        
+        <div class="chord-prog-container">
+            <p>{{ table.note6 }}m, {{ table.note4 }}, {{table.rootNote}}, {{ table.note5 }}</p>
+            <p class="chord-prog">(6-4-1-5)</p>
+        </div>
+    {% elif type == 'Minor' %}
+        <div class="chord-prog-container">
+            <p>{{ table.rootNote }}m, {{ table.note4 }}m, {{table.note5}}m, {{ table.rootNote }}m</p>
+            <p class="chord-prog">(1-4-5-1)</p>
+        </div>
+        
+        <div class="chord-prog-container">
+            <p>{{ table.rootNote }}m, {{ table.note6 }}, {{table.note3}}, {{ table.note7 }}</p>
+            <p class="chord-prog">(1-6-3-7)</p>    
+        </div>
+
+        <div class="chord-prog-container">
+            <p>{{ table.rootNote }}m, {{ table.note7 }}, {{table.note6}}, {{ table.note7 }}, {{ table.rootNote }}m</p>
+            <p class="chord-prog">(1-7-6-7-1)</p>
+        </div>
+    {% endif %}
+    </div>
+    
+{% endblock %}

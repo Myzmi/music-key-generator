@@ -1,0 +1,34 @@
+{% extends "key/layout.html" %}
+
+{% block body %}
+    <h1>Music Key Generator</h1>
+    <div class="key-select">
+        <h2 class="fieldset-h2">Select Another Key</h2>
+        <form action="{% url 'selKey' %}" method="post">
+            {% csrf_token %}
+            <select name="note">
+                <option value="A">A</option>
+                <option value="As">A#</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="Cs">C#</option>
+                <option value="D">D</option>
+                <option value="Ds">D#</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="Fs">F#</option>
+                <option value="G">G</option>
+                <option value="Gs">G#</option>
+            </select>
+            <select name="type">
+                <option value="maj">Major</option>
+                <option value="min">Minor</option>
+            </select>
+            <input type="submit" value="Select">
+        </form>
+        <form action="{% url 'randomKey' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Random</button>
+        </form>
+    </div>
+{% endblock %}
